@@ -1,3 +1,9 @@
+// Copyright (c) 2023, Adam Traeger
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+
 package main
 
 import (
@@ -7,13 +13,13 @@ import (
 	"net/http"
 	"os"
 	"sync"
+
 	"github.com/complacentsee/clarotyApiGoClient"
-}
+)
 
 type Configuration struct {
 	ClarotyAPI clarotyApiGoClient.APIConfiguration `json:"clarotyAPI"`
 }
-
 
 func loadConfig(filename string) (*Configuration, error) {
 	file, err := os.Open(filename)
@@ -46,9 +52,9 @@ func main() {
 	httpClient := http.Client{}
 	config.ClarotyAPI.Client = &httpClient
 
-	clarotyClient := NewClarotyAPI(&config.ClarotyAPI)
+	clarotyClient := clarotyApiGoClient.NewClarotyAPI(&config.ClarotyAPI)
 
-	siteRequest := APISiteRequest{}
+	siteRequest := clarotyApiGoClient.APISiteRequest{}
 
 	siteChan, err := clarotyClient.StreamSites(&siteRequest)
 	if err != nil {
@@ -65,12 +71,12 @@ func main() {
 
 		wg.Add(1)
 
-		go func(site Site) {
+		go func(site clarotyApiGoClient.Site) {
 			defer func() {
 				wg.Done()
 			}()
 
-			assetRequest := APIAssetRequest{}
+			assetRequest := clarotyApiGoClient.APIAssetRequest{}
 			assetRequest.SetFormatAssetList()
 			assetRequest.SetPage(1)
 			assetRequest.SetPerPage(50)
