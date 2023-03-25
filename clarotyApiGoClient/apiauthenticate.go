@@ -22,22 +22,26 @@ func (api *ClarotyAPI) Authenticate() error {
 	postBody, err := json.Marshal(creds)
 	if err != nil {
 		fmt.Println("Error marshaling credentials:", err)
-		return fmt.Errorf("Error marshaling credentials: %v", err)
+		return fmt.Errorf("error marshaling credentials: %v", err)
 	}
 
 	response, err := api.restPost("/auth/authenticate", postBody)
+	if err != nil {
+		fmt.Println("Error authenticating:", err)
+		return fmt.Errorf("error authenticating: %v", err)
+	}
 
 	var authResponse APIAuthenticationResponse
 
 	err = json.Unmarshal(response, &authResponse)
 	if err != nil {
 		fmt.Println("Error unmarshaling authentication response:", err)
-		return fmt.Errorf("Error unmarshaling authentication response: %v", err)
+		return fmt.Errorf("error unmarshaling authentication response: %v", err)
 	}
 
 	if authResponse.PasswordExpired {
 		fmt.Println("Account password has expired")
-		return fmt.Errorf("Account password has expired")
+		return fmt.Errorf("account password has expired")
 	}
 
 	api.authentication = &authResponse

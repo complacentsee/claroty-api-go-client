@@ -6,7 +6,9 @@
 
 package clarotyApiGoClient
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type APIConfiguration struct {
 	URI                   string       `json:"uri"`
@@ -15,6 +17,7 @@ type APIConfiguration struct {
 	Client                *http.Client `json:"-"`
 	IgnoreSSL             *bool        `json:"ignoreSSL"`
 	MaxConcurrentRequests *int         `json:"maxConcurrentRequests"`
+	MaxRetry              *int         `json:"maxRetry"`
 }
 
 type APICredentials struct {
@@ -24,6 +27,7 @@ type APICredentials struct {
 
 type ClarotyAPI struct {
 	configuration  APIConfiguration
+	MaxRetry       *int
 	authentication *APIAuthenticationResponse
 	semaphore      *chan struct{}
 }

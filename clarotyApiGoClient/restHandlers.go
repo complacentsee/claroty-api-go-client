@@ -10,8 +10,10 @@ import (
 	"bytes"
 	"crypto/tls"
 	"errors"
-	"io/ioutil"
+	"io"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 func (api *ClarotyAPI) restGet(path string) ([]byte, error) {
@@ -41,7 +43,32 @@ func (api *ClarotyAPI) restGet(path string) ([]byte, error) {
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", token)
 
-	resp, err := client.Do(req)
+	var resp *http.Response
+	initialBackoff := 500 * time.Millisecond
+	maxBackoff := 16 * time.Second
+	backoff := initialBackoff
+	maxRetry := 3
+	if api.MaxRetry != nil {
+		maxRetry = *api.MaxRetry
+	}
+
+	for i := 0; i <= maxRetry; i++ {
+		resp, err = client.Do(req)
+		if err == nil && !shouldRetry(resp.StatusCode) {
+			break
+		}
+
+		if i < maxRetry {
+			sleepDuration := time.Duration(float64(backoff) * (1 + rand.Float64()))
+			if sleepDuration > maxBackoff {
+				sleepDuration = maxBackoff
+			}
+
+			time.Sleep(sleepDuration)
+			backoff *= 2
+		}
+	}
+
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +78,7 @@ func (api *ClarotyAPI) restGet(path string) ([]byte, error) {
 		return nil, errors.New("restGet: Non-OK HTTP status: " + resp.Status)
 	}
 
-	responseBody, err := ioutil.ReadAll(resp.Body)
+	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -98,10 +125,15 @@ func (api *ClarotyAPI) restPost(path string, body []byte) ([]byte, error) {
 		return nil, errors.New("restPost: Non-OK HTTP status: " + resp.Status)
 	}
 
-	responseBody, err := ioutil.ReadAll(resp.Body)
+	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
 
 	return responseBody, nil
+}
+
+func shouldRetry(statusCode int) bool {
+	return statusCode == http.StatusTooManyRequests || statusCode == http.StatusRequestTimeout ||
+		statusCode == http.StatusServiceUnavailable || statusCode == http.StatusGatewayTimeout
 }
