@@ -128,6 +128,7 @@ type Asset struct {
 	VirtualZoneID          int           `json:"virtual_zone_id"`
 	VirtualZoneName        string        `json:"virtual_zone_name"`
 	VLAN                   []string      `json:"vlan"`
+	PLCSlots               []PLCSlots    `json:"plc_slots"`
 }
 
 type Attribute struct {
@@ -165,4 +166,29 @@ type Network struct {
 
 type Subnet struct {
 	Name string `json:"name"`
+}
+
+type PLCSlots struct {
+	Slots []PLCSlotInformation `json:"plc_slots"`
+}
+
+type PLCSlotInformation struct {
+	Description     string         `json:"description"`
+	InformationType int            `json:"information_type"`
+	Priority        int            `json:"priority"`
+	Slot            int            `json:"slot"`
+	Value           PLCInformation `json:"value"`
+}
+
+type PLCInformation struct {
+	Address         string `json:"address"`
+	Description     string `json:"description"`
+	FirmwareVersion string `json:"firmware_version"`
+	InformationType int    `json:"information_type"`
+	Name            string `json:"name"`
+	OrderNumber     string `json:"order_number"`
+	Priority        int    `json:"priority"`
+	Product         string `json:"product"`
+	SerialNumber    string `json:"serial_number"`
+	Vendor          string `json:"vendor"`
 }
