@@ -75,66 +75,66 @@ type APIAssetResponse struct {
 }
 
 type Asset struct {
-	ActiveQueriesNames     []string             `json:"active_queries_names"`
-	ActiveTasksNames       []string             `json:"active_tasks_names"`
-	Approved               bool                 `json:"approved"`
-	AssetType              int                  `json:"asset_type"`
-	AssetType_             string               `json:"asset_type__"`
-	Children               []interface{}        `json:"children"`
-	ClassType              string               `json:"class_type"`
-	CodeSections           []interface{}        `json:"code_sections"`
-	Criticality            int                  `json:"criticality"`
-	Criticality_           string               `json:"criticality__"`
-	CustomAttributes       []Attribute          `json:"custom_attributes"`
-	CustomInformations     []Information        `json:"custom_informations"`
-	DefaultGateway         interface{}          `json:"default_gateway"`
-	DisplayName            string               `json:"display_name"`
-	DomainWorkgroup        interface{}          `json:"domain_workgroup"`
-	EdgeID                 interface{}          `json:"edge_id"`
-	EdgeLastRun            interface{}          `json:"edge_last_run"`
-	Firmware               string               `json:"firmware"`
-	FirstSeen              string               `json:"first_seen"`
-	Ghost                  bool                 `json:"ghost"`
-	ID                     int                  `json:"id"`
-	InsightNames           []string             `json:"insight_names"`
-	InstalledAntivirus     interface{}          `json:"installed_antivirus"`
-	InstalledProgramsCount int                  `json:"installed_programs_count"`
-	Ipv4                   []string             `json:"ipv4"`
-	LastSeen               string               `json:"last_seen"`
-	LastUpdated            string               `json:"last_updated"`
-	Mac                    []string             `json:"mac"`
-	Model                  string               `json:"model"`
-	Name                   string               `json:"name"`
-	Network                Network              `json:"network"`
-	NetworkID              int                  `json:"network_id"`
-	NumAlerts              int                  `json:"num_alerts"`
-	OsArchitecture         interface{}          `json:"os_architecture"`
-	OsBuild                interface{}          `json:"os_build"`
-	OsServicePack          interface{}          `json:"os_service_pack"`
-	Parsed                 bool                 `json:"parsed"`
-	PatchCount             int                  `json:"patch_count"`
-	ProjectParsed          interface{}          `json:"project_parsed"`
-	Protocol               []string             `json:"protocol"`
-	PurdueLevel            float64              `json:"purdue_level"`
-	ResourceID             string               `json:"resource_id"`
-	RiskLevel              int                  `json:"risk_level"`
-	SerialNumber           string               `json:"serial_number"`
-	SiteID                 int                  `json:"site_id"`
-	SiteName               string               `json:"site_name"`
-	SpecialHint            int                  `json:"special_hint"`
-	SpecialHint_           string               `json:"special_hint__"`
-	State                  interface{}          `json:"state"`
-	Subnet                 Subnet               `json:"subnet"`
-	SubnetID               int                  `json:"subnet_id"`
-	SubnetTag              string               `json:"subnet_tag"`
-	SubnetType             int                  `json:"subnet_type"`
-	Timestamp              string               `json:"timestamp"`
-	UsbDevicesCount        int                  `json:"usb_devices_count"`
-	Valid                  bool                 `json:"valid"`
-	VirtualZoneID          int                  `json:"virtual_zone_id"`
-	VirtualZoneName        string               `json:"virtual_zone_name"`
-	VLAN                   []string             `json:"vlan"`
-	PLCSlots               []PLCSlotInformation `json:"plc_slots"`
+	ActiveQueriesNames     []string      `json:"active_queries_names"`
+	ActiveTasksNames       []string      `json:"active_tasks_names"`
+	Approved               bool          `json:"approved"`
+	AssetType              int           `json:"asset_type"`
+	AssetType_             string        `json:"asset_type__"`
+	Children               []interface{} `json:"children"`
+	ClassType              string        `json:"class_type"`
+	CodeSections           []interface{} `json:"code_sections"`
+	Criticality            int           `json:"criticality"`
+	Criticality_           string        `json:"criticality__"`
+	CustomAttributes       []Attribute   `json:"custom_attributes"`
+	CustomInformations     []Information `json:"custom_informations"`
+	DefaultGateway         interface{}   `json:"default_gateway"`
+	DisplayName            string        `json:"display_name"`
+	DomainWorkgroup        interface{}   `json:"domain_workgroup"`
+	EdgeID                 interface{}   `json:"edge_id"`
+	EdgeLastRun            interface{}   `json:"edge_last_run"`
+	Firmware               string        `json:"firmware"`
+	FirstSeen              string        `json:"first_seen"`
+	Ghost                  bool          `json:"ghost"`
+	ID                     int           `json:"id"`
+	InsightNames           []string      `json:"insight_names"`
+	InstalledAntivirus     interface{}   `json:"installed_antivirus"`
+	InstalledProgramsCount int           `json:"installed_programs_count"`
+	Ipv4                   []string      `json:"ipv4"`
+	LastSeen               string        `json:"last_seen"`
+	LastUpdated            string        `json:"last_updated"`
+	Mac                    []string      `json:"mac"`
+	Model                  string        `json:"model"`
+	Name                   string        `json:"name"`
+	Network                Network       `json:"network"`
+	NetworkID              int           `json:"network_id"`
+	NumAlerts              int           `json:"num_alerts"`
+	OsArchitecture         interface{}   `json:"os_architecture"`
+	OsBuild                interface{}   `json:"os_build"`
+	OsServicePack          interface{}   `json:"os_service_pack"`
+	Parsed                 bool          `json:"parsed"`
+	PatchCount             int           `json:"patch_count"`
+	ProjectParsed          interface{}   `json:"project_parsed"`
+	Protocol               []string      `json:"protocol"`
+	PurdueLevel            float64       `json:"purdue_level"`
+	ResourceID             string        `json:"resource_id"`
+	RiskLevel              int           `json:"risk_level"`
+	SerialNumber           string        `json:"serial_number"`
+	SiteID                 int           `json:"site_id"`
+	SiteName               string        `json:"site_name"`
+	SpecialHint            int           `json:"special_hint"`
+	SpecialHint_           string        `json:"special_hint__"`
+	State                  interface{}   `json:"state"`
+	Subnet                 Subnet        `json:"subnet"`
+	SubnetID               int           `json:"subnet_id"`
+	SubnetTag              string        `json:"subnet_tag"`
+	SubnetType             int           `json:"subnet_type"`
+	Timestamp              string        `json:"timestamp"`
+	UsbDevicesCount        int           `json:"usb_devices_count"`
+	Valid                  bool          `json:"valid"`
+	VirtualZoneID          int           `json:"virtual_zone_id"`
+	VirtualZoneName        string        `json:"virtual_zone_name"`
+	VLAN                   []string      `json:"vlan"`
+	PLCSlots               []PLCSlot     `json:"plc_slots"`
 }
 
 type Attribute struct {
@@ -174,23 +174,46 @@ type Subnet struct {
 	Name string `json:"name"`
 }
 
-type PLCSlotInformation struct {
-	Description     string         `json:"description"`
-	InformationType int            `json:"information_type"`
-	Priority        int            `json:"priority"`
-	Slot            int            `json:"slot"`
-	Value           PLCInformation `json:"value"`
-}
+// type PLCSlotInformation struct {
+// 	Description     string         `json:"description"`
+// 	InformationType int            `json:"information_type"`
+// 	Priority        int            `json:"priority"`
+// 	Slot            int            `json:"slot"`
+// 	Value           PLCInformation `json:"value"`
+// }
 
-type PLCInformation struct {
-	Address         string `json:"address"`
-	Description     string `json:"description"`
-	FirmwareVersion string `json:"firmware_version"`
-	InformationType int    `json:"information_type"`
-	Name            string `json:"name"`
-	OrderNumber     string `json:"order_number"`
-	Priority        int    `json:"priority"`
-	Product         string `json:"product"`
-	SerialNumber    string `json:"serial_number"`
-	Vendor          string `json:"vendor"`
+// type PLCInformation struct {
+// 	Address         string `json:"address"`
+// 	Description     string `json:"description"`
+// 	FirmwareVersion string `json:"firmware_version"`
+// 	InformationType int    `json:"information_type"`
+// 	Name            string `json:"name"`
+// 	OrderNumber     string `json:"order_number"`
+// 	Priority        int    `json:"priority"`
+// 	Product         string `json:"product"`
+// 	SerialNumber    string `json:"serial_number"`
+// 	Vendor          string `json:"vendor"`
+// }
+
+type PLCSlot struct {
+	PLCSlotInformation struct {
+		Description     string `json:"description"`
+		InformationType int    `json:"information_type"`
+		Priority        int    `json:"priority"`
+		Slot            int    `json:"slot"`
+		Value           struct {
+			PLCInformation struct {
+				Address         string `json:"address"`
+				Description     string `json:"description"`
+				FirmwareVersion string `json:"firmware_version"`
+				InformationType int    `json:"information_type"`
+				Name            string `json:"name"`
+				OrderNumber     string `json:"order_number"`
+				Priority        int    `json:"priority"`
+				Product         string `json:"product"`
+				SerialNumber    string `json:"serial_number"`
+				Vendor          string `json:"vendor"`
+			} `json:"PLCInformation"`
+		} `json:"value"`
+	} `json:"PLCSlotInformation"`
 }
