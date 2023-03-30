@@ -136,7 +136,8 @@ type Asset struct {
 	VirtualZoneID          int            `json:"virtual_zone_id"`
 	VirtualZoneName        string         `json:"virtual_zone_name"`
 	VLAN                   []string       `json:"vlan"`
-	PlcSlots               []PlcSlots     `json:"plc_slots"`
+	PlcSlots               interface{}    `json:"plc_slots"`
+	//PlcSlots               []PlcSlots     `json:"plc_slots"`
 }
 
 type Attribute struct {
