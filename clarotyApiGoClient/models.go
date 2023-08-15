@@ -12,8 +12,9 @@ import (
 
 type APIConfiguration struct {
 	URI                   string       `json:"uri"`
-	Username              string       `json:"username"`
-	Password              string       `json:"password"`
+	Username              *string      `json:"username"`
+	Password              *string      `json:"password"`
+	Apikey                *string      `json:"Apikey"`
 	Client                *http.Client `json:"-"`
 	IgnoreSSL             *bool        `json:"ignoreSSL"`
 	MaxConcurrentRequests *int         `json:"maxConcurrentRequests"`
@@ -28,8 +29,13 @@ type APICredentials struct {
 type ClarotyAPI struct {
 	configuration  APIConfiguration
 	MaxRetry       *int
-	authentication *APIAuthenticationResponse
+	authentication APIAuthentication
 	semaphore      *chan struct{}
+}
+
+type APIAuthentication interface {
+	getToken() string
+	isPasswordExpired() bool
 }
 
 type APIAuthenticationResponse struct {
@@ -39,4 +45,24 @@ type APIAuthenticationResponse struct {
 	Token           string `json:"token"`
 	PasswordExpired bool   `json:"password_expired"`
 	Mail            string `json:"mail"`
+}
+
+func (a *APIAuthenticationResponse) getToken() string {
+	return a.Token
+}
+
+func (a *APIAuthenticationResponse) isPasswordExpired() bool {
+	return a.PasswordExpired
+}
+
+type APIAuthenticationKey struct {
+	Apikey string `json:"apikey"`
+}
+
+func (a *APIAuthenticationKey) getToken() string {
+	return a.Apikey
+}
+
+func (a *APIAuthenticationKey) isPasswordExpired() bool {
+	return false
 }

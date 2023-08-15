@@ -111,7 +111,7 @@ func (api *ClarotyAPI) restPost(path string, body []byte) ([]byte, error) {
 	if api.authentication == nil {
 		req.Header.Set("Authorization", "Authorization")
 	} else {
-		token := api.authentication.Token
+		token := api.authentication.getToken()
 		req.Header.Set("Authorization", "Bearer "+token)
 	}
 

@@ -15,9 +15,20 @@ import (
 )
 
 func (api *ClarotyAPI) Authenticate() error {
+
+	if api.configuration.Username == nil || api.configuration.Password == nil {
+		if api.configuration.Apikey == nil {
+			return fmt.Errorf("error authenticating: no apikey or username/password provided")
+		}
+
+		api.authentication = &APIAuthenticationResponse{
+			Token: *api.configuration.Apikey,
+		}
+		return nil
+	}
 	creds := APICredentials{
-		Username: api.configuration.Username,
-		Password: api.configuration.Password,
+		Username: *api.configuration.Username,
+		Password: *api.configuration.Password,
 	}
 	postBody, err := json.Marshal(creds)
 	if err != nil {
@@ -57,7 +68,7 @@ func (api *ClarotyAPI) GetAuthenticationToken() (string, error) {
 		}
 	}
 
-	expired, err := isTokenExpired(api.authentication.Token)
+	expired, err := isTokenExpired(api.authentication.getToken())
 	if err != nil {
 		fmt.Println("Error checking token expiration:", err)
 		return "", err
@@ -71,7 +82,7 @@ func (api *ClarotyAPI) GetAuthenticationToken() (string, error) {
 		}
 	}
 
-	return api.authentication.Token, nil
+	return api.authentication.getToken(), nil
 }
 
 func isTokenExpired(tokenString string) (bool, error) {
