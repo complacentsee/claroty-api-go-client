@@ -68,6 +68,10 @@ func (api *ClarotyAPI) GetAuthenticationToken() (string, error) {
 		}
 	}
 
+	if api.authentication.isAPIKey() {
+		return api.authentication.getToken(), nil
+	}
+
 	expired, err := isTokenExpired(api.authentication.getToken())
 	if err != nil {
 		fmt.Println("Error checking token expiration:", err)

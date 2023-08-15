@@ -36,6 +36,7 @@ type ClarotyAPI struct {
 type APIAuthentication interface {
 	getToken() string
 	isPasswordExpired() bool
+	isAPIKey() bool
 }
 
 type APIAuthenticationResponse struct {
@@ -55,6 +56,10 @@ func (a *APIAuthenticationResponse) isPasswordExpired() bool {
 	return a.PasswordExpired
 }
 
+func (a *APIAuthenticationResponse) isAPIKey() bool {
+	return false
+}
+
 type APIAuthenticationKey struct {
 	Apikey string `json:"apikey"`
 }
@@ -65,4 +70,8 @@ func (a *APIAuthenticationKey) getToken() string {
 
 func (a *APIAuthenticationKey) isPasswordExpired() bool {
 	return false
+}
+
+func (a *APIAuthenticationKey) isAPIKey() bool {
+	return true
 }
