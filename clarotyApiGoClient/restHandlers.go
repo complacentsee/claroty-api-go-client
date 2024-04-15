@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"errors"
+	"fmt"
 	"io"
 	"math/rand"
 	"net/http"
@@ -22,10 +23,7 @@ func (api *ClarotyAPI) restGet(path string) ([]byte, error) {
 	ignoreSSL := api.configuration.IgnoreSSL
 	url := baseURL + path
 
-	token, err := api.GetAuthenticationToken()
-	if err != nil {
-		return nil, err
-	}
+	token := api.configuration.Apikey
 
 	if ignoreSSL != nil && *ignoreSSL {
 		tr := &http.Transport{
@@ -41,7 +39,7 @@ func (api *ClarotyAPI) restGet(path string) ([]byte, error) {
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", token)
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer: %s", *token))
 
 	var resp *http.Response
 	initialBackoff := 500 * time.Millisecond
@@ -105,15 +103,12 @@ func (api *ClarotyAPI) restPost(path string, body []byte) ([]byte, error) {
 		return nil, err
 	}
 
+	token := api.configuration.Apikey
+
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer: %s", *token))
+
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-
-	if api.authentication == nil {
-		req.Header.Set("Authorization", "Authorization")
-	} else {
-		token := api.authentication.getToken()
-		req.Header.Set("Authorization", "Bearer "+token)
-	}
 
 	resp, err := client.Do(req)
 	if err != nil {

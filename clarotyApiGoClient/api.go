@@ -16,8 +16,7 @@ func NewClarotyAPI(config *APIConfiguration) ClarotyAPI {
 	semaphore := make(chan struct{}, *config.MaxConcurrentRequests)
 
 	return ClarotyAPI{
-		configuration:  *config,
-		authentication: nil,
-		semaphore:      &semaphore,
+		configuration: *config,
+		semaphore:     &semaphore,
 	}
 }
